@@ -17,5 +17,10 @@ public class SomeClass
     {
         this.foo = foo;
     }
+
+    @RenderMe
+    public int doSomething(){
+        return 42;
+    }
 }
 

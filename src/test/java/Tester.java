@@ -32,6 +32,7 @@ public class Tester
         assertEquals("Instance of edu.hm.cbrammer.SomeClass:\n" +
                 "foo (Type int): 5\n" +
                 "array (Type int[]): [1, 2, 3]\n" +
-                "date (Type java.util.Date): Fri Jan 02 11:17:36 CET 1970\n", test);
+                "date (Type java.util.Date): Fri Jan 02 11:17:36 CET 1970\n" +
+                "doSomething (Return Type int): 42\n", test);
     }
 }

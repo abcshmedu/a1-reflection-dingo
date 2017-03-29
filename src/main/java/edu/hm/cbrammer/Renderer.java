@@ -51,6 +51,27 @@ public class Renderer
                     renderFromField(toRender,field,buffer);
                 }
             }
+
+        }
+
+        Method[] methods = toRender.getClass().getDeclaredMethods();
+        for(Method method : methods)
+        {
+            if(method.isAnnotationPresent(RenderMe.class))
+            {
+                if(method.getParameterCount() == 0)
+                {
+                    if(!method.isAccessible())
+                        method.setAccessible(true);
+                    Object value = method.invoke(toRender);
+
+                    buffer.append(String.format("%s (Return Type %s): %s\n",
+                            method.getName(),
+                            method.getReturnType().getCanonicalName(),
+                            value.toString()));
+                }
+
+            }
         }
 
         return buffer.toString();
