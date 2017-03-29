@@ -25,19 +25,25 @@ public class Renderer
             {
                 RenderMe renderMeAnnotation = field.getAnnotation(RenderMe.class);
                 final String with = renderMeAnnotation.with();
-                if(with != "")
+                System.out.println(with);
+                if(!with.isEmpty())
                 {
-                    Object newRenderer = Class.forName(with).newInstance();
-                    Method method = newRenderer.getClass().getMethod("render");
+                    Class forNameClass = Class.forName(with);
+
+                    Object newRenderer = forNameClass.newInstance();
+                    Method method = newRenderer.getClass().getMethod("render",field.getType());
 
                     if(!method.isAccessible())
                         method.setAccessible(true);
 
-                    Object returnValue = method.invoke(toRender, field.get(toRender));
+                    Object returnValue = method.invoke(newRenderer, field.get(toRender));
                     if(returnValue.getClass() == String.class)
                     {
                         final String value = (String)returnValue;
-                        buffer.append(value);
+                        buffer.append(String.format("%s (Type %s): %s\n",
+                                field.getName(),
+                                field.getType().getCanonicalName(),
+                                value));
                     }
                 }
                 else
@@ -56,7 +62,7 @@ public class Renderer
             field.setAccessible(true);
         buffer.append(String.format("%s (Type %s): %s\n",
                 field.getName(),
-                field.getType().getName(),
+                field.getType().getCanonicalName(),
                 field.get(toRender).toString()
         ));
     }
