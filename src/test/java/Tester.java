@@ -44,7 +44,7 @@ public class Tester
 
 
     @Test()
-    public void SomeTest() throws IllegalAccessException, ClassNotFoundException, NoSuchMethodException, InstantiationException, InvocationTargetException
+    public void SomeTest() throws RuntimeException
     {
         String test = renderer.render();
         System.out.println(test);

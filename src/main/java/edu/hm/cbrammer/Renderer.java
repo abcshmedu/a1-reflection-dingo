@@ -29,6 +29,9 @@ public class Renderer {
             buffer.append(String.format("Instance of %s:\n", toRender.getClass().getName()));
             Field[] fields = toRender.getClass().getDeclaredFields();
             for (Field field : fields) {
+                if (!field.isAccessible()) {
+                    field.setAccessible(true);
+                }
                 if (field.isAnnotationPresent(RenderMe.class)) {
                     RenderMe renderMeAnnotation = field.getAnnotation(RenderMe.class);
                     final String with = renderMeAnnotation.with();
